@@ -16,15 +16,24 @@ import {
   findDerived
 } from 'find-derived'
 
-export {
+import {
   fromExistingTemplate
 } from './existing'
+
+export const download = {
+  fromLocal,
+  fromRepo,
+  fromNpm,
+  shouldDownload,
+  fromExistingTemplate
+}
 
 export {
   fromLocal,
   fromRepo,
   fromNpm,
-  shouldDownload
+  shouldDownload,
+  fromExistingTemplate
 }
 
 const defaults = {

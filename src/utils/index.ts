@@ -27,7 +27,7 @@ const defaults = {
  * @param templatePaths
  * @param options
  */
-export function collectTemplateFilesFrom(templatePaths: string[], options: any = {}) {
+export async function collectTemplateFilesFrom(templatePaths: string[], options: any = {}) {
   let readDir = options.readDir || defaults.readDir
   const promises = templatePaths.map(async (templatePath) => {
     return await readDir(templatePath)
@@ -102,3 +102,10 @@ export function ensureRepos(options: any) {
   return fs.ensureDir(reposDir)
 }
 
+export const utils = {
+  ensureRepos,
+  ensurePackages,
+  getPackageTemplatePath,
+  createConfig,
+  collectTemplateFilesFrom
+}

@@ -2,8 +2,7 @@ import {
   parse
 } from '..'
 
-// extend(mainSrc: ITemplateSrc, extendSrc: ITemplateSrc, options: any = {})
-describe('extend', () => {
+describe('gitRepo', () => {
   it('parses repo template', () => {
     const repo = {
       user: 'kristianmandrup',

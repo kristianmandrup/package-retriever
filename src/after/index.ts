@@ -29,7 +29,6 @@ export function updateNotify(pkg: any) {
   }
 }
 
-
 export async function postRetrieve(parsed: IParseResult, options: any) {
   const {
     dest,
@@ -57,4 +56,9 @@ export async function postRetrieve(parsed: IParseResult, options: any) {
     templatePkg,
     dest
   }
+}
+
+export const after = {
+  postRetrieve,
+  updateNotify
 }

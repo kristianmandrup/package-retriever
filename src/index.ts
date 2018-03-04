@@ -22,6 +22,14 @@ export async function resolveTemplates(templateUri: string, options: any = {}) {
 }
 
 export {
+  utils
+} from './utils'
+
+export {
+  after
+} from './after'
+
+export {
   extendTemplateSrcWith
 } from './extend'
 
@@ -30,7 +38,8 @@ export {
   fromLocal,
   fromRepo,
   fromNpm,
-  shouldDownload
+  shouldDownload,
+  download
 } from './download'
 
 export {

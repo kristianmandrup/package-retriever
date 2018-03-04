@@ -1,5 +1,4 @@
 export {
-  parse,
   parseUri,
   retrieveTemplates,
   postRetrieve,
@@ -9,6 +8,10 @@ export {
   fromRepo,
   fromNpm,
   shouldDownload,
-  extendTemplateSrcWith
+  extendTemplateSrcWith,
+  download,
+  parse,
+  after,
+  utils
 } from '../src'
 
