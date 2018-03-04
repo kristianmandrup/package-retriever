@@ -1,13 +1,14 @@
 const ensurePackageName = (name: string) => name.replace(/^(template-)?/, 'template-')
 
 import {
-  parse, IParseResult
+  parseUri,
+  IParseResult
 } from '.'
 
 // Explict npm name
 export function explicitNpm(template: string, options?: any): IParseResult | false {
   if (!template.startsWith('npm:')) return false
-  return parse(template.replace(/^npm:/, ''), false)
+  return parseUri(template.replace(/^npm:/, ''), false)
 }
 
 // npm package

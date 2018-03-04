@@ -3,7 +3,7 @@ import * as tildify from 'tildify'
 import {
   ensurePackages,
   readPkg
-} from '../utils'
+} from '../../utils'
 
 export async function downloadFromNpm(options: any = {}) {
   const {

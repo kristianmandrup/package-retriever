@@ -1,7 +1,7 @@
 {
   "name": "package-retriever",
   "version": "0.1.0",
-  "description": "Tools to retrieve a package from either local cache, npm or git repo",
+  "description": "Tool suite to retrieve a package from either local cache, npm or git repo",
   "main": "dist/index.js",
   "scripts": {
     "test": "npm test"
@@ -15,6 +15,17 @@
   ],
   "author": "Kristian Mandrup <kmandrup@gmail.com>",
   "license": "MIT",
+  "jest": {
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ],
+    "transform": {
+      "\\.(ts|tsx)$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "testRegex": "/__tests__/.*\\.(ts|tsx|js)$"
+  },
   "dependencies": {
     "deepmerge": "^2.0.1",
     "download-git-repo": "^1.0.2",

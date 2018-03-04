@@ -1,4 +1,6 @@
-import { IParseResult } from '.'
+import {
+  IParseResult
+} from '.'
 
 export function gitRepo(template: string, options?: any): IParseResult | false {
   // git repo
