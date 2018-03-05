@@ -15,11 +15,9 @@ describe('collectTemplateFilesFrom', () => {
     createCwd: false
   }
 
-  const simpleFs = {}
-
   beforeEach(() => {
     // use mockfs
-    mockFs(simpleFs)
+    mockFs(fileStruct, options)
   })
 
   afterAll(() => {

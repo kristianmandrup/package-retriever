@@ -40,14 +40,14 @@ export {
   relativePaths
 } from './extend'
 
-// export {
-//   fromExistingTemplate,
-//   fromLocal,
-//   fromRepo,
-//   fromNpm,
-//   shouldDownload,
-//   download
-// } from './download'
+export {
+  fromExistingTemplate,
+  fromLocal,
+  fromRepo,
+  fromNpm,
+  shouldDownload,
+  download
+} from './download'
 
 export {
   parse,

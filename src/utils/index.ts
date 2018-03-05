@@ -2,8 +2,15 @@ import * as path from 'path'
 import * as EventEmitter from 'events'
 import * as fs from 'fs-extra'
 import * as home from 'user-home'
+import * as readPkgJson from 'read-package-json'
+import * as readJsonSync from 'read-json-sync'
+import {
+  promisify
+} from 'util'
 
-const defaults = {
+const asyncReadPkgJson = promisify(readPkgJson)
+
+export const defaults = {
   event: new EventEmitter(),
   configDir: path.join(home, '.sao'),
   pkg: {
@@ -48,6 +55,7 @@ export function createConfig(options: any) {
   validatePath(reposDir, 'reposDir')
 
   event = event || defaults.event
+
   return {
     configDir,
     packagesDir,
@@ -57,56 +65,73 @@ export function createConfig(options: any) {
 }
 
 export function getPackageTemplatePath(name: string, options: any) {
-  const {
-    packagesDir
-  } = parse(options, 'packagesDir')
+  const packagesDir = parseOpts(options, 'packagesDir')
   validatePath(packagesDir, 'packagesDir')
   return path.join(packagesDir, 'node_modules', name)
 }
 
-export function readPkg(dir: string) {
+export async function asyncReadPkg(dir: string) {
   try {
-    validatePath(dir, 'dir')
-    return require(path.join(dir, 'package.json'))
-  } catch (err) {
-    if (err.code === 'MODULE_NOT_FOUND') {
-      return null
+    validatePath(dir, 'pkg dir')
+    const pkgPath = path.join(dir, 'package.json')
+    const pkg = await asyncReadPkgJson(pkgPath, null, false)
+    return {
+      pkg,
+      pkgPath
     }
+  } catch (err) {
+    // if (err.code === 'MODULE_NOT_FOUND') {
+    //   return null
+    // }
     throw err
   }
 }
 
-function parse(options: any, key: string) {
+export function readPkg(dir: string) {
+  try {
+    validatePath(dir, 'pkg dir')
+    const pkgPath = path.join(dir, 'package.json')
+    const pkg = readJsonSync(pkgPath)
+    return {
+      pkg,
+      pkgPath
+    }
+  } catch (err) {
+    // if (err.code === 'MODULE_NOT_FOUND') {
+    //   return null
+    // }
+    throw err
+  }
+}
+
+
+export function parseOpts(options: any, key: string) {
   return typeof options === 'string' ? options : options[key]
 }
 
 export async function ensurePackages(options: any, pkg?: any) {
-  let {
-    packagesDir
-  } = parse(options, 'packagesDir')
-
-  pkg = pkg || options.pkg || defaults.pkg
-
+  const packagesDir = parseOpts(options, 'packagesDir')
   validatePath(packagesDir, 'packagesDir')
+  pkg = pkg || options.pkg || defaults.pkg || {}
   try {
     await fs.ensureDir(packagesDir)
+    const pkgPath = path.join(packagesDir, 'package.json'),
     await fs.writeFile(
       path.join(packagesDir, 'package.json'),
       JSON.stringify(pkg),
       'utf8'
     )
+    return pkgPath
   } catch (err) {
     throw new Error(`ensurePackages: invalid packagesDir: ${packagesDir}`)
   }
 }
 
-export function ensureRepos(options: any) {
-  const {
-    reposDir
-  } = parse(options, 'reposDir')
+export async function ensureRepos(options: any) {
+  const reposDir = parseOpts(options, 'reposDir')
   validatePath(reposDir, 'reposDir')
   try {
-    return fs.ensureDir(reposDir)
+    return await fs.ensureDir(reposDir)
   } catch (err) {
     throw new Error(`ensurePackages: invalid packagesDir: ${reposDir}`)
   }
@@ -116,5 +141,9 @@ export const utils = {
   ensureRepos,
   ensurePackages,
   getPackageTemplatePath,
-  createConfig
+  createConfig,
+  readPkg,
+  asyncReadPkg,
+  parseOpts,
+  defaults
 }
