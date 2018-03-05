@@ -4,7 +4,7 @@ import {
 
 describe('npm', () => {
   it('parses npm template', () => {
-    const name = 'find-derived'
+    const name = 'find-it'
     const version = '1.0.0'
     const template = `${name}@${version}`
     const options = {}

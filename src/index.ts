@@ -30,7 +30,8 @@ export {
 } from './after'
 
 export {
-  collectTemplateFilesFrom
+  collectTemplateFilesFrom,
+  flatTemplateFilesFrom
 } from './collect'
 
 

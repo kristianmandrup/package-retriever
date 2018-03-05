@@ -6,7 +6,7 @@ describe('fromRepo', () => {
   const dest = ''
   const repo = {
     user: 'kristianmandrup',
-    name: 'find-derived',
+    name: 'find-it',
     // version: 'master'
   }
 

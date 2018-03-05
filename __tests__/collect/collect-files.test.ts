@@ -1,10 +1,18 @@
 import {
-  collectTemplateFilesFrom
+  collectTemplateFilesFrom,
+  flatTemplateFilesFrom
 } from '..'
 import * as mockFs from 'mock-fs'
 
-describe('collectTemplateFilesFrom', () => {
+// async function iterate(templatePaths: string[]): Promise<string[]> {
+//   const promises = templatePaths.map(async (templatePath: string) => {
+//     // console.log('read', templatePath)
+//     return 'x'
+//   })
+//   return Promise.all(promises)
+// }
 
+describe('collect', () => {
   const fileStruct = {
     'my': {
       'templates': {
@@ -20,7 +28,8 @@ describe('collectTemplateFilesFrom', () => {
     }
   }
 
-  beforeEach(() => {
+
+  beforeAll(() => {
     // use mockfs
     mockFs(fileStruct)
   })
@@ -29,17 +38,45 @@ describe('collectTemplateFilesFrom', () => {
     mockFs.restore()
   })
 
-  it('collects files from each path', async () => {
-    const options = {}
-    const templatePaths = [
-      'my/templates',
-      'my/other/templates'
-    ]
 
-    const files: string[] = await collectTemplateFilesFrom(templatePaths, options)
-    console.log({
-      files
+  describe('collectTemplateFilesFrom', () => {
+    it('collects files from each path into multiple lists', async () => {
+      const options = {}
+      const templatePaths = [
+        'my/templates',
+        'my/other/templates'
+      ]
+
+      const files: Array<string>[] = await collectTemplateFilesFrom(templatePaths, options)
+      expect(files.length).toBeGreaterThan(0)
+      expect(files[0]).toEqual([
+        'my/templates/a',
+        'my/templates/b'
+      ])
+      expect(files[1]).toEqual([
+        'my/other/templates/a',
+        'my/other/templates/d'
+      ])
     })
-    expect(files.length).toBeGreaterThan(0)
+  })
+
+
+  describe('flatTemplateFilesFrom', () => {
+    it('collects files from each path into one list', async () => {
+      const options = {}
+      const templatePaths = [
+        'my/templates',
+        'my/other/templates'
+      ]
+
+      const files: string[] = await flatTemplateFilesFrom(templatePaths, options)
+      expect(files.length).toBeGreaterThan(0)
+      expect(files).toEqual([
+        'my/templates/a',
+        'my/templates/b',
+        'my/other/templates/a',
+        'my/other/templates/d'
+      ])
+    })
   })
 })

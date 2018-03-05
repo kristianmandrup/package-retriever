@@ -6,7 +6,7 @@ describe('gitRepo', () => {
   it('parses repo template', () => {
     const repo = {
       user: 'kristianmandrup',
-      name: 'find-derived',
+      name: 'find-it',
       // version: 'master'
     }
     const template = `${repo.user}/${repo.name}`
@@ -19,7 +19,7 @@ describe('gitRepo', () => {
   it('parses repo template with version', () => {
     const repo = {
       user: 'kristianmandrup',
-      name: 'find-derived',
+      name: 'find-it',
       version: 'master'
     }
     const template = `${repo.user}/${repo.name}#${repo.version}`

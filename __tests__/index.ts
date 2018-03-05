@@ -12,6 +12,7 @@ export {
   // download,
   // parse,
   collectTemplateFilesFrom,
+  flatTemplateFilesFrom,
   utils,
   after,
 } from '../src'

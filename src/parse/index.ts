@@ -31,7 +31,7 @@ export const parse = {
 
 
 import {
-  firstValue
+  findDerived
 } from 'find-derived'
 
 const defaultParsed = {
@@ -51,6 +51,6 @@ export function parseUri(templateUri: string, templatePrefix = true): IParseResu
   const opts = {
     templatePrefix
   }
-  return firstValue(strategies, (fn: Function) => fn(templateUri, opts)) || defaultParsed
+  return findDerived(strategies, (fn: Function) => fn(templateUri, opts)) || defaultParsed
 }
 
