@@ -59,7 +59,7 @@ export function createConfig(options: any) {
 export function getPackageTemplatePath(name: string, options: any) {
   const {
     packagesDir
-  } = options
+  } = parse(options, 'packagesDir')
   validatePath(packagesDir, 'packagesDir')
   return path.join(packagesDir, 'node_modules', name)
 }
@@ -76,12 +76,16 @@ export function readPkg(dir: string) {
   }
 }
 
-export async function ensurePackages(options: any) {
+function parse(options: any, key: string) {
+  return typeof options === 'string' ? options : options[key]
+}
+
+export async function ensurePackages(options: any, pkg?: any) {
   let {
-    pkg,
     packagesDir
-  } = options
-  pkg = pkg || defaults.pkg
+  } = parse(options, 'packagesDir')
+
+  pkg = pkg || options.pkg || defaults.pkg
 
   validatePath(packagesDir, 'packagesDir')
   try {
@@ -99,7 +103,7 @@ export async function ensurePackages(options: any) {
 export function ensureRepos(options: any) {
   const {
     reposDir
-  } = options
+  } = parse(options, 'reposDir')
   validatePath(reposDir, 'reposDir')
   try {
     return fs.ensureDir(reposDir)
