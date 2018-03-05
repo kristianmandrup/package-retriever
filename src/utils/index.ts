@@ -2,15 +2,8 @@ import * as path from 'path'
 import * as EventEmitter from 'events'
 import * as fs from 'fs-extra'
 import * as home from 'user-home'
-import * as readDirCb from 'recursive-readdir'
-import {
-  promisify
-} from 'util'
-
-const recursiveReadDir = promisify(readDirCb);
 
 const defaults = {
-  readDir: recursiveReadDir,
   event: new EventEmitter(),
   configDir: path.join(home, '.sao'),
   pkg: {
@@ -22,17 +15,14 @@ const defaults = {
   }
 }
 
-/**
- * collect all template files from list of template file paths
- * @param templatePaths
- * @param options
- */
-export async function collectTemplateFilesFrom(templatePaths: string[], options: any = {}) {
-  let readDir = options.readDir || defaults.readDir
-  const promises = templatePaths.map(async (templatePath) => {
-    return await readDir(templatePath)
-  })
-  return Promise.all(promises)
+function isPath(filePath: string) {
+  return typeof filePath === 'string' && filePath.length > 0
+}
+
+export function validatePath(filePath: string, name: string) {
+  if (!isPath(filePath)) {
+    throw new Error(`${name} must be a valid file path, was: ${filePath}`)
+  }
 }
 
 /**
@@ -48,8 +38,15 @@ export function createConfig(options: any) {
   } = options
 
   configDir = configDir || defaults.configDir
+
+  validatePath(configDir, 'configDir')
+
   packagesDir = packagesDir || path.join(configDir, 'packages')
+  validatePath(packagesDir, 'packagesDir')
+
   reposDir = reposDir || path.join(configDir, 'repos')
+  validatePath(reposDir, 'reposDir')
+
   event = event || defaults.event
   return {
     configDir,
@@ -63,11 +60,13 @@ export function getPackageTemplatePath(name: string, options: any) {
   const {
     packagesDir
   } = options
+  validatePath(packagesDir, 'packagesDir')
   return path.join(packagesDir, 'node_modules', name)
 }
 
 export function readPkg(dir: string) {
   try {
+    validatePath(dir, 'dir')
     return require(path.join(dir, 'package.json'))
   } catch (err) {
     if (err.code === 'MODULE_NOT_FOUND') {
@@ -84,14 +83,16 @@ export async function ensurePackages(options: any) {
   } = options
   pkg = pkg || defaults.pkg
 
-  const packagesDirExists = await fs.pathExists(packagesDir)
-  if (!packagesDirExists) {
+  validatePath(packagesDir, 'packagesDir')
+  try {
     await fs.ensureDir(packagesDir)
     await fs.writeFile(
       path.join(packagesDir, 'package.json'),
       JSON.stringify(pkg),
       'utf8'
     )
+  } catch (err) {
+    throw new Error(`ensurePackages: invalid packagesDir: ${packagesDir}`)
   }
 }
 
@@ -99,13 +100,17 @@ export function ensureRepos(options: any) {
   const {
     reposDir
   } = options
-  return fs.ensureDir(reposDir)
+  validatePath(reposDir, 'reposDir')
+  try {
+    return fs.ensureDir(reposDir)
+  } catch (err) {
+    throw new Error(`ensurePackages: invalid packagesDir: ${reposDir}`)
+  }
 }
 
 export const utils = {
   ensureRepos,
   ensurePackages,
   getPackageTemplatePath,
-  createConfig,
-  collectTemplateFilesFrom
+  createConfig
 }

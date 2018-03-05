@@ -30,25 +30,30 @@ export {
 } from './after'
 
 export {
-  extendTemplateSrcWith
-} from './extend'
+  collectTemplateFilesFrom
+} from './collect'
 
-export {
-  fromExistingTemplate,
-  fromLocal,
-  fromRepo,
-  fromNpm,
-  shouldDownload,
-  download
-} from './download'
 
-export {
-  parse,
-  parseUri,
-  retrieveTemplates,
-  postRetrieve,
-  createConfig
-}
+// export {
+//   extendTemplateSrcWith
+// } from './extend'
+
+// export {
+//   fromExistingTemplate,
+//   fromLocal,
+//   fromRepo,
+//   fromNpm,
+//   shouldDownload,
+//   download
+// } from './download'
+
+// export {
+//   parse,
+//   parseUri,
+//   retrieveTemplates,
+//   postRetrieve,
+//   createConfig
+// }
 
 
 

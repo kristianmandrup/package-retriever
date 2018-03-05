@@ -2,13 +2,25 @@ import {
   utils
 } from '..'
 
+import * as mockFs from 'mock-fs'
+
 describe('utils', () => {
   describe('ensureRepos', () => {
-    it('works', () => {
-      const options = {}
+    it('works when a valid reposDir is specified', () => {
+      const options = {
+        reposDir: 'a/b'
+      }
 
       const ensured = utils.ensureRepos(options)
       expect(ensured).toBeDefined()
+    })
+
+    it('fails when invalid reposDir is specified', () => {
+      const options = {
+        reposDir: 42
+      }
+      const ensure = () => utils.ensureRepos(options)
+      expect(ensure).toThrow()
     })
   })
 
@@ -22,16 +34,30 @@ describe('utils', () => {
   })
 
   describe('getPackageTemplatePath', () => {
-    it('works', () => {
+    it('throws if packagesDir not a string', () => {
       const options = {}
       const name = 'find-derived'
 
+      const runTemplatePath = () => utils.getPackageTemplatePath(name, options)
+      expect(runTemplatePath).toThrow()
+    })
+
+    it('works', () => {
+      const options = {
+        packagesDir: 'x/y/z'
+      }
+      const name = 'find-derived'
+
       const templatePath = utils.getPackageTemplatePath(name, options)
+      console.log({
+        templatePath
+      })
       expect(templatePath).toBeDefined()
 
     })
   })
-  describe('createConfig', () => {
+
+  describe.only('createConfig', () => {
     it('works', () => {
       const options = {}
 
@@ -39,19 +65,4 @@ describe('utils', () => {
       expect(config).toBeDefined()
     })
   })
-  describe('collectTemplateFilesFrom', async () => {
-    it('works', () => {
-      const options = {}
-      const templatePaths = [
-        'my/templates',
-        'my/other/templates'
-      ]
-
-      // use mockfs
-
-      const files: string[] = await utils.collectTemplateFilesFrom(templatePaths, options)
-      expect(files.length).toBeGreaterThan(0)
-    })
-  })
-
 })
