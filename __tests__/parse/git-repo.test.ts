@@ -5,6 +5,7 @@ import {
 describe('gitRepo', () => {
   it('parses repo template', () => {
     const repo = {
+      type: 'repo',
       user: 'kristianmandrup',
       name: 'find-it',
       // version: 'master'
@@ -18,6 +19,7 @@ describe('gitRepo', () => {
 
   it('parses repo template with version', () => {
     const repo = {
+      type: 'repo',
       user: 'kristianmandrup',
       name: 'find-it',
       version: 'master'

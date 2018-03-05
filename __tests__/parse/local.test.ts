@@ -6,12 +6,10 @@ describe('local', () => {
   it('parses local template', () => {
     const template = `./a/local/file-path`
     const options = {}
-    const parsed = parse.local(template, options)
+    const parsed: any = parse.local(template, options)
     expect(parsed).toBeTruthy()
-    expect(parsed).toEqual({
-      type: 'local',
-      path: template
-    })
+    expect(parsed.type).toEqual('local')
+    expect(parsed.path).toMatch(template.slice(1))
   })
 
   it('aborts on non-local template', () => {
