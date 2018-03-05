@@ -35,9 +35,10 @@ export {
 } from './collect'
 
 
-// export {
-//   extendTemplateSrcWith
-// } from './extend'
+export {
+  extendTemplateSrcWith,
+  relativePaths
+} from './extend'
 
 // export {
 //   fromExistingTemplate,
@@ -48,13 +49,13 @@ export {
 //   download
 // } from './download'
 
-// export {
-//   parse,
-//   parseUri,
-//   retrieveTemplates,
-//   postRetrieve,
-//   createConfig
-// }
+export {
+  parse,
+  parseUri,
+  retrieveTemplates,
+  postRetrieve,
+  createConfig
+}
 
 
 

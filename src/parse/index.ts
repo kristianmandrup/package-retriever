@@ -46,11 +46,8 @@ const strategies = [
   gitRepo
 ]
 
-export function parseUri(templateUri: string, templatePrefix = true): IParseResult {
-  // From SAO: https://github.com/saojs/sao/blob/master/lib/utils/parse-template.js
-  const opts = {
-    templatePrefix
-  }
-  return findDerived(strategies, (fn: Function) => fn(templateUri, opts)) || defaultParsed
+// See SAO: https://github.com/saojs/sao/blob/master/lib/utils/parse-template.js
+export function parseUri(templateUri: string, options: any = { templatePrefix: true }): IParseResult {
+  return findDerived(strategies, (fn: Function) => fn(templateUri, options)) || defaultParsed
 }
 

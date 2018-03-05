@@ -21,19 +21,18 @@ interface ITemplateSrc {
   srcPath: string
 }
 
-function relativePaths(templateSrc: ITemplateSrc): string[] {
-  const length = templateSrc.srcPath.length
+function normalizePath(filePath: string) {
+  return filePath[filePath.length] === '/' ? filePath : filePath + '/'
+}
+
+export function relativePaths(templateSrc: ITemplateSrc): string[] {
+  const normalizedPath = normalizePath(templateSrc.srcPath)
+  const length = normalizedPath.length
+
   return templateSrc.files.map(file => {
     return file.substr(length);
   })
 }
-
-import * as readAllFiles from 'recursive-readdir'
-
-export async function filesAt(filePath: string) {
-  return await readAllFiles(filePath)
-}
-
 
 /**
  * extend a set of templates from one source with a set of template from another source

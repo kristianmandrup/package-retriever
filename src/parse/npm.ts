@@ -12,7 +12,7 @@ export function explicitNpm(template: string, options?: any): IParseResult | fal
 }
 
 // npm package
-export function npmPackage(template: string, options?: any): IParseResult | false {
+export function npmPackage(template: string, options: any = {}): IParseResult | false {
   const {
     templatePrefix
   } = options
@@ -22,15 +22,20 @@ export function npmPackage(template: string, options?: any): IParseResult | fals
     type: 'invalid'
   }
   const [, name, version] = matches
-  return {
+
+  const npmDef: any = {
     type: 'npm',
     name: templatePrefix ? ensurePackageName(name) : name,
-    version
+
   }
+  if (version) {
+    npmDef.version = version
+  }
+  return npmDef
 }
 
 // npm scoped package
-export function npmScopedPackage(template: string, options?: any): IParseResult | false {
+export function npmScopedPackage(template: string, options: any = {}): IParseResult | false {
   const {
     templatePrefix
   } = options
