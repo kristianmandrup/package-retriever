@@ -3,8 +3,7 @@ import {
 } from '../..'
 
 import * as path from 'path'
-import * as mockFs from 'mock-fs'
-import * as nock from 'nock'
+
 
 // FOR TESTING
 // See: https://github.com/flipxfx/download-git-repo/tree/master/test
