@@ -63,7 +63,13 @@ describe('fromLocal', () => {
       expect(typeof pkg.dest).toBe('string')
       expect(pkg.dest).toBe('./my/templates')
       expect(typeof pkg.templatePkg).toBe('object')
-      expect(pkg.templatePkg).toBe({})
+      expect(pkg.templatePkg).toEqual({
+        "pkg": {
+          "name": "my-template",
+        },
+        "pkgPath": "my/templates/package.json",
+      }
+      )
       expect(pkg.configFileName).toBe(configFileName)
     }
   })

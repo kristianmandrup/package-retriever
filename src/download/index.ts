@@ -3,7 +3,9 @@ import {
   fromLocal
 } from './local'
 import {
-  fromRepo
+  tryFromRepo,
+  fromRepo,
+  repo
 } from './repo'
 import {
   fromNpm
@@ -22,6 +24,7 @@ import {
 
 export const download = {
   fromLocal,
+  tryFromRepo,
   fromRepo,
   fromNpm,
   shouldDownload,
@@ -29,6 +32,7 @@ export const download = {
 }
 
 export {
+  repo,
   fromLocal,
   fromRepo,
   fromNpm,

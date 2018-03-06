@@ -4,8 +4,21 @@ import {
   fromExistingTemplate
 } from '../existing'
 import {
-  downloadRepo
+  downloadRepo,
 } from './download-repo'
+
+import {
+  asyncDownload,
+  fetchRepo
+} from './download'
+
+export const repo = {
+  asyncDownload,
+  downloadRepo,
+  fetchRepo,
+  tryFromRepo,
+  fromRepo
+}
 
 export interface IRepoDef {
   user: string
@@ -13,17 +26,23 @@ export interface IRepoDef {
   version?: string
 }
 
+import {
+  validatePath
+} from '../../utils'
+
 export function tryFromRepo(parsed: any, options: any = {}) {
   if (parsed.type !== 'repo') return false
   return fromRepo(parsed, options)
 }
 
-export function fromRepo(repo: IRepoDef, options: any = {}) {
+export async function fromRepo(repo: IRepoDef, options: any = {}) {
   const {
     mustDownload,
     clone,
     reposDir
   } = options
+
+  validatePath(reposDir, 'reposDir')
 
   const folderName = filenamify(
     `${repo.user}%%${repo.name.replace('/', '-')}`
@@ -34,5 +53,5 @@ export function fromRepo(repo: IRepoDef, options: any = {}) {
     clone
   }
 
-  return mustDownload && downloadRepo(repo, opts) || fromExistingTemplate(opts)
+  return mustDownload && await downloadRepo(repo, opts) || fromExistingTemplate(opts)
 }

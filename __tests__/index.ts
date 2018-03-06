@@ -11,6 +11,7 @@ export {
   relativePaths,
   extendTemplateSrcWith,
   download,
+  repo,
   parse,
   collectTemplateFilesFrom,
   flatTemplateFilesFrom,

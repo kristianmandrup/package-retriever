@@ -14,7 +14,7 @@ export async function downloadRepo(repo: any, options: any = {}) {
 
   event.emit('download:start')
 
-  await download.repo(repo, dest, {
+  await download.fetchRepo(repo, dest, {
     clone
   })
 

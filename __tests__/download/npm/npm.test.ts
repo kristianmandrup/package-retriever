@@ -2,17 +2,26 @@ import {
   fromNpm
 } from '../..'
 
-describe('fromNpm', () => {
-  const dest = ''
-  const packageName = 'abc'
+describe('download', () => {
+  const dest = 'my-npm/packages'
+  let pkgPath = 'my/pkg-path'
 
-  it('aborts when ...', () => {
-    const pkg = fromNpm(packageName, { dest })
-    expect(pkg).toBeDefined()
-  })
+  describe('fromNpm', () => {
 
-  it('retrieves from local cache', () => {
-    const pkg = fromNpm(packageName, { dest })
-    expect(pkg).toBeDefined()
+    const packageName = 'abc'
+
+    it('aborts when not an npm def', () => {
+      const options = {
+        dest,
+        pkgPath
+      }
+      const pkg = fromNpm(packageName, )
+      expect(pkg).toBeDefined()
+    })
+
+    it('retrieves from local cache', () => {
+      const pkg = fromNpm(packageName, { dest })
+      expect(pkg).toBeDefined()
+    })
   })
 })

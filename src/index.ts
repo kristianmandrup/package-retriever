@@ -46,7 +46,8 @@ export {
   fromRepo,
   fromNpm,
   shouldDownload,
-  download
+  download,
+  repo
 } from './download'
 
 export {
