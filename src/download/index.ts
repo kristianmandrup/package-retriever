@@ -8,7 +8,9 @@ import {
   repo
 } from './repo'
 import {
-  fromNpm
+  tryFromNpm,
+  fromNpm,
+  npm,
 } from './npm'
 import {
   shouldDownload
@@ -33,8 +35,11 @@ export const download = {
 
 export {
   repo,
+  npm,
   fromLocal,
+  tryFromRepo,
   fromRepo,
+  tryFromNpm,
   fromNpm,
   shouldDownload,
   fromExistingTemplate

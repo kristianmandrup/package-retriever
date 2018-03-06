@@ -12,6 +12,7 @@ export {
   extendTemplateSrcWith,
   download,
   repo,
+  npm,
   parse,
   collectTemplateFilesFrom,
   flatTemplateFilesFrom,

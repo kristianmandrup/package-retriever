@@ -9,6 +9,12 @@ import {
   getPackageTemplatePath
 } from '../../utils'
 
+export const npm = {
+  downloadFromNpm,
+  tryFromNpm,
+  fromNpm
+}
+
 /**
  * download from npm
  * @param parsed
